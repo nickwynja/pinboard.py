@@ -17,6 +17,7 @@ import json
 import operator
 import urllib.request, urllib.parse, urllib.error
 import logging
+import socket
 
 from . import exceptions
 
@@ -179,7 +180,9 @@ class PinboardCall(object):
         try:
             request = urllib.request.Request(final_url)
             opener = urllib.request.build_opener(urllib.request.HTTPSHandler)
-            response = opener.open(request, timeout=10)
+            response = opener.open(request, timeout=30)
+        except socket.timeout as e:
+            pass
         except urllib.error.HTTPError as e:
             error_mappings = {
                 401: exceptions.PinboardAuthenticationError,
