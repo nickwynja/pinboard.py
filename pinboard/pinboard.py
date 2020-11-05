@@ -179,7 +179,7 @@ class PinboardCall(object):
         try:
             request = urllib.request.Request(final_url)
             opener = urllib.request.build_opener(urllib.request.HTTPSHandler)
-            response = opener.open(request)
+            response = opener.open(request, timeout=10)
         except urllib.error.HTTPError as e:
             error_mappings = {
                 401: exceptions.PinboardAuthenticationError,
